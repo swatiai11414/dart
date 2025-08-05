@@ -1,0 +1,50 @@
+name: Flutter Android APK Build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.x'  # अपने प्रोजेक्ट के अनुसार Flutter version डालें
+          cache: true
+
+      - name: Install Android SDK and NDK
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;27.0.12077973"
+
+      - name: Set NDK path in local.properties
+        run: echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/27.0.12077973" >> $GITHUB_WORKSPACE/android/local.properties
+
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Flutter clean
+        run: flutter clean
+
+      - name: Build APK (Release)
+        run: flutter build apk --release
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
