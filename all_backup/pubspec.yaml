@@ -11,7 +11,6 @@ dependencies:
   mime: ^1.0.4
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
 
@@ -21,9 +20,3 @@ flutter:
   assets:
     - images/banner.png
     - images/logo.png
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "images/logo.png"
-  min_sdk_android: 21
