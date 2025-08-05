@@ -14,7 +14,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.x'
+          flutter-version: '3.22.x'  # अपनी Flutter version यहाँ डालें
           cache: true
 
       - name: Set up Android SDK
@@ -32,10 +32,13 @@ jobs:
       - name: Install required NDK
         run: sdkmanager "ndk;27.0.12077973"
 
-      - name: Set NDK path in local.properties
+      - name: Ensure android folder exists
+        run: mkdir -p $GITHUB_WORKSPACE/android
+
+      - name: Set NDK version in local.properties
         run: echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/27.0.12077973" >> $GITHUB_WORKSPACE/android/local.properties
 
-      - name: Get Flutter dependencies
+      - name: Install Flutter dependencies
         run: flutter pub get
 
       - name: Flutter clean
