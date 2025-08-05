@@ -23,13 +23,14 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.x'  # अपने प्रोजेक्ट के अनुसार Flutter version डालें
+          flutter-version: '3.22.x'
           cache: true
 
-      - name: Install Android SDK and NDK
-        run: |
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;27.0.12077973"
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install required NDK
+        run: sdkmanager "ndk;27.0.12077973"
 
       - name: Set NDK path in local.properties
         run: echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/27.0.12077973" >> $GITHUB_WORKSPACE/android/local.properties
