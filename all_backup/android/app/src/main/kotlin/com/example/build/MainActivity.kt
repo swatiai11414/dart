@@ -1,30 +1,21 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.file_transffer"
-    xmlns:tools="http://schemas.android.com/tools">
+package com.example.file_transffer
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-    <uses-permission android:name="android.permission.BODY_SENSORS" />
-    <uses-permission android:name="android.permission.BODY_SENSORS_BACKGROUND" />
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
+import android.os.Build
 
-    <application
-        android:label="khilesh prajapat"
-        android:icon="@mipmap/ic_launcher"
-        android:requestLegacyExternalStorage="true"
-        android:theme="@style/LaunchTheme">
+class MainActivity : FlutterActivity() {
+    private val CHANNEL = "com.example/permissions"
 
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-</manifest>
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
+            if (call.method == "getAndroidSdkInt") {
+                result.success(Build.VERSION.SDK_INT)
+            } else {
+                result.notImplemented()
+            }
+        }
+    }
+}
