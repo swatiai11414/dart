@@ -20,7 +20,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Flutter SDK
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.x'
@@ -42,7 +42,7 @@ jobs:
         working-directory: all_backup
         run: flutter pub get
 
-      - name: Flutter Clean
+      - name: Flutter clean
         working-directory: all_backup
         run: flutter clean
 
