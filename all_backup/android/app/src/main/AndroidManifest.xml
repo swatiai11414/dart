@@ -3,15 +3,10 @@
     package="com.example.file_transffer"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Storage Permissions -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-
-    <!-- Sensor Permissions -->
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.BODY_SENSORS_BACKGROUND" />
 
@@ -35,6 +30,5 @@
             </intent-filter>
 
         </activity>
-
     </application>
 </manifest>
